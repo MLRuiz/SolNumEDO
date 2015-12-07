@@ -1,0 +1,14 @@
+function y=PC2(f,x,y0)
+%PC2 versión epsilón
+%    x=linspace(a,b,n); %Estas son las equises
+    h=x(2)-x(1); %Tamaño de paso
+    y=y0(:); %Inicializa
+    n=length(x);
+    ytemp=trapecios(f,x,y0);
+    y(:,2)=ytemp(:,2); %Aquí incluímos el valor de la inicialización con trapecios
+    for i=3:n
+        ytemp=y(:,i-1)+h*(3*f(x(i-1),y(:,i-1))-f(x(i-2),y(:,i-2)))/2; %AB2 
+        y(:,i)=y(:,i-1)+h*(5*f(x(i),ytemp)/12+...
+            2*f(x(i-1),y(:,i-1))/3-f(x(i-2),y(:,i-2))/12); %AB2 
+    end
+end
