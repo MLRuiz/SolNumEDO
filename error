@@ -1,8 +1,9 @@
-function er = errorc(y,x,f)
+function er = errorc(ode,x,y)
+%error de la aproximación de la derivada
     n=length(x);
     h=x(2)-x(1);
     for j=2:n-1
-        ytemp=f(x(j),y(:,j));
+        ytemp=ode(x(j),y(:,j));
         for i=1:size(y,1) 
             er(i,j)=norm((y(i,j+1)-y(i,j-1))/2/h-ytemp(i));
         end
