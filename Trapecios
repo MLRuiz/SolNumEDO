@@ -1,13 +1,10 @@
-function [y]=trapecios(f,x,y0)
-%Trapecios versión epsilón
+function [y]=trapecios(ode,x,y0)
     h=x(2)-x(1); %Tamaño de paso
     y=y0(:); %Inicializa
     n=length(x);
     opcion=optimset('Display','off');
     for i=2:n
-        xtemp=x(i);ytemp=y(:,i-1);
-        xtomp=x(i-1);
-        F=@(z) h*(f(xtemp,z)+f(xtomp,ytemp))/2+ytemp-z;
-        y(:,i)=fsolve(F,ytemp,opcion); %Euler hacia atrás
+        F=@(z) h*(ode(x(i),z)+ode(x(i-1),y(:,i-1)))/2+y(:,i-1)-z;
+        y(:,i)=fsolve(F,y(:,i-1),opcion); 
     end
 end
