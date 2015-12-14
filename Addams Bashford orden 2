@@ -1,12 +1,11 @@
-function y=AB2(f,x,y0)
-%AB2 versión epsilón
-%    x=linspace(a,b,n); %Estas son las equises
+function y=AB2(ode,x,y0)
+%Adams-Bashfoth (orden 2)
     h=x(2)-x(1); %Tamaño de paso
-    y=y0(:); %Inicializa
+    y=y0(:);
     n=length(x);
-    ytemp=trapecios(f,x,y0);
-    y(:,2)=ytemp(:,2); %Aquí incluímos el valor de la inicialización con trapecios
+    ytemp=trapecios(ode,x,y0); %Inicializa
+    y(:,2)=ytemp(:,2); 
     for i=3:n
-        y(:,i)=y(:,i-1)+h*(3*f(x(i-1),y(:,i-1))-f(x(i-2),y(:,i-2)))/2; %AB2 
+        y(:,i)=y(:,i-1)+h*(3*ode(x(i-1),y(:,i-1))-ode(x(i-2),y(:,i-2)))/2;  
     end
 end
