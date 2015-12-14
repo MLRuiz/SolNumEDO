@@ -1,0 +1,11 @@
+function [y]=eulerb(ode,x,y0)
+%Euler hacia atrás versión vectorial
+    h=x(2)-x(1);
+    y=y0(:); 
+    n=length(x);
+    opcion=optimset('Display','off');
+    for i=2:n
+        F=@(z) h*ode(x(i),z)+y(:,i-1)-z;
+        y(:,i)=fsolve(F,y(:,i-1),opcion); 
+    end
+end
