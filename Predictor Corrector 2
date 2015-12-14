@@ -1,14 +1,13 @@
 function y=PC2(ode,x,y0)
-%PC2 versión epsilón
-%    x=linspace(a,b,n); %Estas son las equises
+%Predictor Corrector 2
     h=x(2)-x(1); %Tamaño de paso
-    y=y0(:); %Inicializa
+    y=y0(:); 
     n=length(x);
     ytemp=trapecios(ode,x,y0);
-    y(:,2)=ytemp(:,2); %Aquí incluímos el valor de la inicialización con trapecios
+    y(:,2)=ytemp(:,2); %Inicializa
     for i=3:n
-        ytemp=y(:,i-1)+h*(3*ode(x(i-1),y(:,i-1))-ode(x(i-2),y(:,i-2)))/2; %AB2 
+        ytemp=y(:,i-1)+h*(3*ode(x(i-1),y(:,i-1))-ode(x(i-2),y(:,i-2)))/2;%AB2 
         y(:,i)=y(:,i-1)+h*(5*ode(x(i),ytemp)/12+...
-            2*ode(x(i-1),y(:,i-1))/3-ode(x(i-2),y(:,i-2))/12); %AB2 
+            2*ode(x(i-1),y(:,i-1))/3-ode(x(i-2),y(:,i-2))/12);%AM2 
     end
 end
